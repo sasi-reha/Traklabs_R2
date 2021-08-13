@@ -1,0 +1,94 @@
+COMPANY : TRAKLABS
+
+NAME : SASIREHA S
+ROLL NO : 18BIS038
+COLLGE MAIL ID : sasireha.18is@kct.ac.in
+
+DATE : 13-08-2021 (FRIDAY)
+
+PROBLEMS :
+
+1.Create new employees and departments ( basic fields of Employee as 'Id'[DB generated],
+'EmpName', ‘Age' and for Department as 'Id'[DB Generated], ‘DepName' )
+
+
+CREATE DATABASE employeedeptmanagement;
+SOL:
+
+#employee table
+CREATE TABLE employees (
+    Id varchar(100),
+    EmpName varchar(255),
+    Age int,
+    PRIMARY KEY (Id)
+);
+
+#department table
+
+CREATE TABLE departments(Id varchar(100), DepName varchar(255),FOREIGN KEY (Id) REFERENCES employees(Id));
+
+
+2.Link employees to a particular department 
+
+SOL:
+
+INSERT INTO employees(Id,EmpName,Age) VALUES ('E101','sunil','27');
+INSERT INTO employees(Id,EmpName,Age) VALUES ('E102','sabari','28');
+INSERT INTO employees(Id,EmpName,Age) VALUES ('E103','deva','29');
+
+INSERT INTO departments(Id,DepName) VALUES ('E101','software');
+INSERT INTO departments(Id,DepName) VALUES ('E102','hardware');
+INSERT INTO departments(Id,DepName) VALUES ('E103','sales');
+
+SELECT employees.EmpName, departments.DepName
+FROM employees
+FULL OUTER JOIN Orders ON employees.Id=departments.Id
+ORDER BY employees.EmpName;
+
+
+3.Change the department of any employee
+
+SOL:
+
+UPDATE employees SET DepName= 'sales' WHERE Id='E102';
+
+4.Delete an employee and/or department
+
+SOL:
+
+DELETE FROM employees WHERE Id = 'E101'; 
+DELETE FROM departments WHERE DepName = 'software';
+
+5.Create database in PostgreSQL and save all data in the DB
+
+SOL:
+
+CREATE DATABASE copyedmanagement WITH TEMPLATE employeedeptmanagement OWNER uname;
+
+
+6.You should be able to sort the employees list and the department list from the UI
+
+SOL:
+
+SELECT * FROM employees ORDER BY Id  ASC;
+SELECT * FROM employees ORDER BY Id  DESC;
+
+7.Implement searching of data based on any field search
+
+SOL:
+
+SELECT * FROM employeedeptmanagement.employees WHERE employee.Id = 'E101';
+
+
+8.) Logs should be implemented to store log data in text format for every day
+
+SOL:
+
+CREATE TABLE `general_log` (DATAS);
+
+SET global general_log = 1;
+SET global log_output = 'table';
+select * from mysql.general_log;
+SET global general_log = 0;
+
+9.Create API documentation using swagger
